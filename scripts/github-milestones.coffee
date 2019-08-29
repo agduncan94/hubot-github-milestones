@@ -10,9 +10,18 @@ module.exports = (robot) ->
           milestones = null
           try
             milestones = JSON.parse body
+            msg.send "#{milestones}"
           catch error
             msg.send "Error parsing JSON"
 
-          for milestone in milestones
+          compare = (a, b) ->
+            if a.title < b.title
+              return -1
+            if a.title > b.title
+              return 1
+            return 0
+
+          sortedMilestones = milestones.sort compare
+          for milestone in sortedMilestones
             msg.send "#{milestone.title} is #{Math.floor(milestone.closed_issues/(milestone.open_issues + milestone.closed_issues)*100)}% complete with " +
               "#{milestone.open_issues} open issues and #{milestone.closed_issues} closed issues"
