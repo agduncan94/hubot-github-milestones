@@ -10,7 +10,6 @@ module.exports = (robot) ->
           milestones = null
           try
             milestones = JSON.parse body
-            msg.send "#{milestones}"
           catch error
             msg.send "Error parsing JSON"
 
